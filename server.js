@@ -13,7 +13,7 @@ app.get('/', function(request, response) {
 		var options = {
 		  host: 'www.nseindia.com',
 		  method: 'GET',
-		  path: '/live_market/dynaContent/live_watch/get_quote/getFOHistoricalData.jsp?underlying=' + symbol +'instrument=FUTSTK&expiry=29AUG2013&type=-&strike=-&fromDate=&toDate=&datePeriod=2weeks',
+		  path: '/live_market/dynaContent/live_watch/get_quote/getFOHistoricalData.jsp?underlying=' + symbol +'&instrument=FUTSTK&expiry=29AUG2013&type=-&strike=-&fromDate=&toDate=&datePeriod=2weeks',
 		  headers: {
 		  	"User-Agent": "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)",
 		  	"Referer": "http://www.nseindia.com/",
@@ -32,21 +32,9 @@ app.get('/', function(request, response) {
 			});
 			res.on('end', function() {
 				resp = resp.trim();
-				data = JSON.parse(resp);
-
-				if(data.data.length < 1) {
-					// Invalid Symbol
-					response.send('<h1>Invalid Symbol</h1>');
-					return;
-				}
-
-				// Cleaning up the feeds
-				delete data.otherSeries;
-				delete data.optLink;
-				delete data.futLink;
-				
+								
 				// Now send the data
-				response.send(data);
+				response.send(resp);
 				
 				// @TODO Can still filter to provide more precise data 
 			});
